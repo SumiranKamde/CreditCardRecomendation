@@ -1,0 +1,28 @@
+# Dependencies
+**/node_modules/
+
+# Environment and secrets
+**/.env
+**/.env.*
+!**/.env.example
+
+# Build output
+**/.next/
+**/dist/
+**/build/
+
+# Logs
+**/*.log
+npm-debug.log*
+
+# Local tooling
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+
+# Preserved nested repository metadata
+frontend/.git.frontend-history/
+
+# Preserved nested repository metadata
+frontend/.git.frontend-history/

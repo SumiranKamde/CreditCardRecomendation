@@ -1,0 +1,39 @@
+{
+  "name": "ccr-backend",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Zero-PII Indian Credit Card Recommender — backend API (Phase 1)",
+  "type": "module",
+  "scripts": {
+    "dev": "node --watch src/server.ts",
+    "start": "node src/server.ts",
+    "typecheck": "tsc --noEmit",
+    "test": "node tests/scoring.test.ts",
+    "prisma:generate": "prisma generate",
+    "db:push": "prisma db push",
+    "db:migrate": "prisma migrate dev --name init",
+    "seed": "node prisma/seed.ts",
+    "catalogue:check": "node prisma/validate-catalogue.ts"
+  },
+  "prisma": {
+    "seed": "node prisma/seed.ts"
+  },
+  "dependencies": {
+    "@prisma/client": "^5.22.0",
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.5",
+    "express": "^4.21.2",
+    "express-rate-limit": "^8.6.2",
+    "helmet": "^8.3.0"
+  },
+  "devDependencies": {
+    "@types/cors": "^2.8.17",
+    "@types/express": "^4.17.21",
+    "@types/node": "^22.9.0",
+    "prisma": "^5.22.0",
+    "typescript": "^5.6.3"
+  },
+  "engines": {
+    "node": ">=22.6.0"
+  }
+}

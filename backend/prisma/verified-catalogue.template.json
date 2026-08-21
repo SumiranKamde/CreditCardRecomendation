@@ -1,0 +1,447 @@
+{
+  "purpose": "Phase 3 verification worksheet & Full Seed Payload (Mapped Categories)",
+  "rules": {
+    "rewardRate": "fraction, 0.05 means 5%",
+    "minIncome": "annual INR",
+    "maxCap": "monthly INR reward-value cap",
+    "source": "official issuer page or MITC document only"
+  },
+  "cards": [
+    {
+      "cardName": "SBI Cashback Card",
+      "bankName": "SBI Card",
+      "sourceUrl": "https://www.sbicard.com/en/personal/credit-cards/cashback-sbi-card.html",
+      "lastVerifiedAt": "2026-08-21",
+      "annualFee": 999,
+      "minIncome": 500000,
+      "applyUrl": "https://www.sbicard.com/en/personal/credit-cards/cashback-sbi-card.html",
+      "imageUrl": "https://res.cloudinary.com/demo/image/upload/sbi-cashback.png",
+      "multipliers": [
+        { "category": "Online", "rewardRate": 0.05, "maxCap": 5000 },
+        { "category": "Other", "rewardRate": 0.01, "maxCap": null }
+      ]
+    },
+    {
+      "cardName": "Millennia Credit Card",
+      "bankName": "HDFC Bank",
+      "sourceUrl": "https://www.hdfcbank.com/personal/pay/cards/millennia-cards/millennia-card",
+      "lastVerifiedAt": "2026-08-21",
+      "annualFee": 1000,
+      "minIncome": 420000,
+      "applyUrl": "https://www.hdfcbank.com/personal/pay/cards/millennia-cards/millennia-card",
+      "imageUrl": "https://res.cloudinary.com/demo/image/upload/hdfc-millennia.png",
+      "multipliers": [
+        { "category": "Shopping", "rewardRate": 0.05, "maxCap": 1000 },
+        { "category": "Other", "rewardRate": 0.01, "maxCap": 1000 }
+      ]
+    },
+    {
+      "cardName": "ACE Credit Card",
+      "bankName": "Axis Bank",
+      "sourceUrl": "https://www.axisbank.com/retail/cards/credit-card/axis-bank-ace-credit-card",
+      "lastVerifiedAt": "2026-08-21",
+      "annualFee": 499,
+      "minIncome": 600000,
+      "applyUrl": "https://www.axisbank.com/retail/cards/credit-card/axis-bank-ace-credit-card",
+      "imageUrl": "https://res.cloudinary.com/demo/image/upload/axis-ace.png",
+      "multipliers": [
+        { "category": "Online", "rewardRate": 0.05, "maxCap": 500 },
+        { "category": "Dining", "rewardRate": 0.04, "maxCap": 500 },
+        { "category": "Other", "rewardRate": 0.015, "maxCap": null }
+      ]
+    },
+    {
+      "cardName": "Amazon Pay Credit Card",
+      "bankName": "ICICI Bank",
+      "sourceUrl": "https://www.icicibank.com/personal-banking/cards/amazon-pay-credit-card",
+      "lastVerifiedAt": "2026-08-21",
+      "annualFee": 0,
+      "minIncome": 300000,
+      "applyUrl": "https://www.icicibank.com/personal-banking/cards/amazon-pay-credit-card",
+      "imageUrl": "https://res.cloudinary.com/demo/image/upload/icici-amazon-pay.png",
+      "multipliers": [
+        { "category": "Shopping", "rewardRate": 0.05, "maxCap": null },
+        { "category": "Online", "rewardRate": 0.02, "maxCap": null },
+        { "category": "Other", "rewardRate": 0.01, "maxCap": null }
+      ]
+    },
+    {
+      "cardName": "Flipkart Axis Bank Credit Card",
+      "bankName": "Axis Bank",
+      "sourceUrl": "https://www.axisbank.com/retail/cards/credit-card/flipkart-axis-bank-credit-card",
+      "lastVerifiedAt": "2026-08-21",
+      "annualFee": 500,
+      "minIncome": 300000,
+      "applyUrl": "https://www.axisbank.com/retail/cards/credit-card/flipkart-axis-bank-credit-card",
+      "imageUrl": "https://res.cloudinary.com/demo/image/upload/axis-flipkart.png",
+      "multipliers": [
+        { "category": "Shopping", "rewardRate": 0.05, "maxCap": null },
+        { "category": "Travel", "rewardRate": 0.04, "maxCap": null },
+        { "category": "Other", "rewardRate": 0.015, "maxCap": null }
+      ]
+    },
+    {
+      "cardName": "Swiggy HDFC Bank Credit Card",
+      "bankName": "HDFC Bank",
+      "sourceUrl": "https://www.hdfcbank.com/personal/pay/cards/swiggy-hdfc-bank-credit-card",
+      "lastVerifiedAt": "2026-08-21",
+      "annualFee": 500,
+      "minIncome": 300000,
+      "applyUrl": "https://www.hdfcbank.com/personal/pay/cards/swiggy-hdfc-bank-credit-card",
+      "imageUrl": "https://res.cloudinary.com/demo/image/upload/hdfc-swiggy.png",
+      "multipliers": [
+        { "category": "Dining", "rewardRate": 0.10, "maxCap": 1500 },
+        { "category": "Online", "rewardRate": 0.05, "maxCap": 1500 },
+        { "category": "Other", "rewardRate": 0.01, "maxCap": 500 }
+      ]
+    },
+    {
+      "cardName": "Airtel Axis Bank Credit Card",
+      "bankName": "Axis Bank",
+      "sourceUrl": "https://www.axisbank.com/retail/cards/credit-card/airtel-axis-bank-credit-card",
+      "lastVerifiedAt": "2026-08-21",
+      "annualFee": 500,
+      "minIncome": 300000,
+      "applyUrl": "https://www.axisbank.com/retail/cards/credit-card/airtel-axis-bank-credit-card",
+      "imageUrl": "https://res.cloudinary.com/demo/image/upload/axis-airtel.png",
+      "multipliers": [
+        { "category": "Online", "rewardRate": 0.25, "maxCap": 250 },
+        { "category": "Online", "rewardRate": 0.10, "maxCap": 250 },
+        { "category": "Dining", "rewardRate": 0.10, "maxCap": 500 },
+        { "category": "Other", "rewardRate": 0.01, "maxCap": null }
+      ]
+    },
+    {
+      "cardName": "HSBC Cashback Credit Card",
+      "bankName": "HSBC Bank",
+      "sourceUrl": "https://www.hsbc.co.in/credit-cards/products/cashback/",
+      "lastVerifiedAt": "2026-08-21",
+      "annualFee": 999,
+      "minIncome": 400000,
+      "applyUrl": "https://www.hsbc.co.in/credit-cards/products/cashback/",
+      "imageUrl": "https://res.cloudinary.com/demo/image/upload/hsbc-cashback.png",
+      "multipliers": [
+        { "category": "Dining", "rewardRate": 0.10, "maxCap": 1000 },
+        { "category": "Other", "rewardRate": 0.015, "maxCap": null }
+      ]
+    },
+    {
+      "cardName": "SimplyCLICK SBI Card",
+      "bankName": "SBI Card",
+      "sourceUrl": "https://www.sbicard.com/en/personal/credit-cards/shopping/simplyclick-sbi-card.page",
+      "lastVerifiedAt": "2026-08-21",
+      "annualFee": 499,
+      "minIncome": 300000,
+      "applyUrl": "https://www.sbicard.com/en/personal/credit-cards/shopping/simplyclick-sbi-card.page",
+      "imageUrl": "https://res.cloudinary.com/demo/image/upload/sbi-simplyclick.png",
+      "multipliers": [
+        { "category": "Shopping", "rewardRate": 0.025, "maxCap": null },
+        { "category": "Online", "rewardRate": 0.0125, "maxCap": null },
+        { "category": "Other", "rewardRate": 0.0025, "maxCap": null }
+      ]
+    },
+    {
+      "cardName": "SimplySAVE SBI Card",
+      "bankName": "SBI Card",
+      "sourceUrl": "https://www.sbicard.com/en/personal/credit-cards/shopping/simplysave-sbi-card.page",
+      "lastVerifiedAt": "2026-08-21",
+      "annualFee": 499,
+      "minIncome": 300000,
+      "applyUrl": "https://www.sbicard.com/en/personal/credit-cards/shopping/simplysave-sbi-card.page",
+      "imageUrl": "https://res.cloudinary.com/demo/image/upload/sbi-simplysave.png",
+      "multipliers": [
+        { "category": "Shopping", "rewardRate": 0.025, "maxCap": null },
+        { "category": "Other", "rewardRate": 0.0025, "maxCap": null }
+      ]
+    },
+    {
+      "cardName": "Tata Neu Infinity Credit Card",
+      "bankName": "HDFC Bank",
+      "sourceUrl": "https://www.hdfcbank.com/personal/pay/cards/tata-neu-infinity-hdfc-bank-credit-card",
+      "lastVerifiedAt": "2026-08-21",
+      "annualFee": 1499,
+      "minIncome": 1200000,
+      "applyUrl": "https://www.hdfcbank.com/personal/pay/cards/tata-neu-infinity-hdfc-bank-credit-card",
+      "imageUrl": "https://res.cloudinary.com/demo/image/upload/hdfc-tataneu-infinity.png",
+      "multipliers": [
+        { "category": "Shopping", "rewardRate": 0.10, "maxCap": null },
+        { "category": "Shopping", "rewardRate": 0.05, "maxCap": null },
+        { "category": "Other", "rewardRate": 0.015, "maxCap": null }
+      ]
+    },
+    {
+      "cardName": "Tata Neu Plus Credit Card",
+      "bankName": "HDFC Bank",
+      "sourceUrl": "https://www.hdfcbank.com/personal/pay/cards/tata-neu-plus-hdfc-bank-credit-card",
+      "lastVerifiedAt": "2026-08-21",
+      "annualFee": 499,
+      "minIncome": 300000,
+      "applyUrl": "https://www.hdfcbank.com/personal/pay/cards/tata-neu-plus-hdfc-bank-credit-card",
+      "imageUrl": "https://res.cloudinary.com/demo/image/upload/hdfc-tataneu-plus.png",
+      "multipliers": [
+        { "category": "Shopping", "rewardRate": 0.07, "maxCap": null },
+        { "category": "Shopping", "rewardRate": 0.02, "maxCap": null },
+        { "category": "Other", "rewardRate": 0.01, "maxCap": null }
+      ]
+    },
+    {
+      "cardName": "IDFC First Millennia Credit Card",
+      "bankName": "IDFC FIRST Bank",
+      "sourceUrl": "https://www.idfcfirstbank.com/personal-banking/cards/credit-card/millennia-credit-card",
+      "lastVerifiedAt": "2026-08-21",
+      "annualFee": 0,
+      "minIncome": 300000,
+      "applyUrl": "https://www.idfcfirstbank.com/personal-banking/cards/credit-card/millennia-credit-card",
+      "imageUrl": "https://res.cloudinary.com/demo/image/upload/idfc-millennia.png",
+      "multipliers": [
+        { "category": "Other", "rewardRate": 0.025, "maxCap": null },
+        { "category": "Online", "rewardRate": 0.015, "maxCap": null },
+        { "category": "Other", "rewardRate": 0.0075, "maxCap": null }
+      ]
+    },
+    {
+      "cardName": "IDFC First Select Credit Card",
+      "bankName": "IDFC FIRST Bank",
+      "sourceUrl": "https://www.idfcfirstbank.com/personal-banking/cards/credit-card/select-credit-card",
+      "lastVerifiedAt": "2026-08-21",
+      "annualFee": 0,
+      "minIncome": 500000,
+      "applyUrl": "https://www.idfcfirstbank.com/personal-banking/cards/credit-card/select-credit-card",
+      "imageUrl": "https://res.cloudinary.com/demo/image/upload/idfc-select.png",
+      "multipliers": [
+        { "category": "Other", "rewardRate": 0.025, "maxCap": null },
+        { "category": "Online", "rewardRate": 0.015, "maxCap": null },
+        { "category": "Other", "rewardRate": 0.0075, "maxCap": null }
+      ]
+    },
+    {
+      "cardName": "IDFC First Wealth Credit Card",
+      "bankName": "IDFC FIRST Bank",
+      "sourceUrl": "https://www.idfcfirstbank.com/personal-banking/cards/credit-card/wealth-credit-card",
+      "lastVerifiedAt": "2026-08-21",
+      "annualFee": 0,
+      "minIncome": 1200000,
+      "applyUrl": "https://www.idfcfirstbank.com/personal-banking/cards/credit-card/wealth-credit-card",
+      "imageUrl": "https://res.cloudinary.com/demo/image/upload/idfc-wealth.png",
+      "multipliers": [
+        { "category": "Other", "rewardRate": 0.025, "maxCap": null },
+        { "category": "Online", "rewardRate": 0.015, "maxCap": null },
+        { "category": "Other", "rewardRate": 0.0075, "maxCap": null }
+      ]
+    },
+    {
+      "cardName": "IndianOil Axis Bank Credit Card",
+      "bankName": "Axis Bank",
+      "sourceUrl": "https://www.axisbank.com/retail/cards/credit-card/indianoil-axis-bank-credit-card",
+      "lastVerifiedAt": "2026-08-21",
+      "annualFee": 500,
+      "minIncome": 250000,
+      "applyUrl": "https://www.axisbank.com/retail/cards/credit-card/indianoil-axis-bank-credit-card",
+      "imageUrl": "https://res.cloudinary.com/demo/image/upload/axis-indianoil.png",
+      "multipliers": [
+        { "category": "Fuel", "rewardRate": 0.04, "maxCap": 200 },
+        { "category": "Shopping", "rewardRate": 0.01, "maxCap": 100 },
+        { "category": "Other", "rewardRate": 0.002, "maxCap": null }
+      ]
+    },
+    {
+      "cardName": "BPCL SBI Card OCTANE",
+      "bankName": "SBI Card",
+      "sourceUrl": "https://www.sbicard.com/en/personal/credit-cards/travel/bpcl-sbi-card-octane.page",
+      "lastVerifiedAt": "2026-08-21",
+      "annualFee": 1499,
+      "minIncome": 500000,
+      "applyUrl": "https://www.sbicard.com/en/personal/credit-cards/travel/bpcl-sbi-card-octane.page",
+      "imageUrl": "https://res.cloudinary.com/demo/image/upload/sbi-octane.png",
+      "multipliers": [
+        { "category": "Fuel", "rewardRate": 0.0725, "maxCap": 2500 },
+        { "category": "Shopping", "rewardRate": 0.025, "maxCap": null },
+        { "category": "Other", "rewardRate": 0.0025, "maxCap": null }
+      ]
+    },
+    {
+      "cardName": "Regalia Gold Credit Card",
+      "bankName": "HDFC Bank",
+      "sourceUrl": "https://v.hdfc.bank.in/regalia-gold/index.html",
+      "lastVerifiedAt": "2026-08-21",
+      "annualFee": 2500,
+      "minIncome": 1200000,
+      "applyUrl": "https://v.hdfc.bank.in/regalia-gold/index.html",
+      "imageUrl": "https://res.cloudinary.com/demo/image/upload/hdfc-regaliagold.png",
+      "multipliers": [
+        { "category": "Shopping", "rewardRate": 0.086, "maxCap": null },
+        { "category": "Other", "rewardRate": 0.017, "maxCap": null }
+      ]
+    },
+    {
+      "cardName": "Diners Club Privilege Credit Card",
+      "bankName": "HDFC Bank",
+      "sourceUrl": "https://www.hdfcbank.com/personal/pay/cards/diners-club-privilege-credit-card",
+      "lastVerifiedAt": "2026-08-21",
+      "annualFee": 1000,
+      "minIncome": 840000,
+      "applyUrl": "https://www.hdfcbank.com/personal/pay/cards/diners-club-privilege-credit-card",
+      "imageUrl": "https://res.cloudinary.com/demo/image/upload/hdfc-diners-privilege.png",
+      "multipliers": [
+        { "category": "Dining", "rewardRate": 0.0667, "maxCap": null },
+        { "category": "Dining", "rewardRate": 0.0133, "maxCap": null },
+        { "category": "Other", "rewardRate": 0.0133, "maxCap": null }
+      ]
+    },
+    {
+      "cardName": "MoneyBack+ Credit Card",
+      "bankName": "HDFC Bank",
+      "sourceUrl": "https://www.hdfcbank.com/personal/pay/cards/moneyback-plus-credit-card",
+      "lastVerifiedAt": "2026-08-21",
+      "annualFee": 500,
+      "minIncome": 300000,
+      "applyUrl": "https://www.hdfcbank.com/personal/pay/cards/moneyback-plus-credit-card",
+      "imageUrl": "https://res.cloudinary.com/demo/image/upload/hdfc-moneyback-plus.png",
+      "multipliers": [
+        { "category": "Shopping", "rewardRate": 0.025, "maxCap": 2500 },
+        { "category": "Other", "rewardRate": 0.0125, "maxCap": 2500 },
+        { "category": "Other", "rewardRate": 0.003, "maxCap": null }
+      ]
+    },
+    {
+      "cardName": "Axis Bank Atlas Credit Card",
+      "bankName": "Axis Bank",
+      "sourceUrl": "https://www.axisbank.com/retail/cards/credit-card/axis-bank-atlas-credit-card",
+      "lastVerifiedAt": "2026-08-21",
+      "annualFee": 5000,
+      "minIncome": 1200000,
+      "applyUrl": "https://www.axisbank.com/retail/cards/credit-card/axis-bank-atlas-credit-card",
+      "imageUrl": "https://res.cloudinary.com/demo/image/upload/axis-atlas.png",
+      "multipliers": [
+        { "category": "Travel", "rewardRate": 0.10, "maxCap": null },
+        { "category": "Other", "rewardRate": 0.04, "maxCap": null }
+      ]
+    },
+    {
+      "cardName": "Axis Bank My Zone Credit Card",
+      "bankName": "Axis Bank",
+      "sourceUrl": "https://www.axisbank.com/retail/cards/credit-card/axis-bank-my-zone-credit-card",
+      "lastVerifiedAt": "2026-08-21",
+      "annualFee": 500,
+      "minIncome": 250000,
+      "applyUrl": "https://www.axisbank.com/retail/cards/credit-card/axis-bank-my-zone-credit-card",
+      "imageUrl": "https://res.cloudinary.com/demo/image/upload/axis-myzone.png",
+      "multipliers": [
+        { "category": "Dining", "rewardRate": 0.04, "maxCap": 480 },
+        { "category": "Other", "rewardRate": 0.01, "maxCap": null }
+      ]
+    },
+    {
+      "cardName": "Scapia Federal Bank Credit Card",
+      "bankName": "Federal Bank",
+      "sourceUrl": "https://www.federalbank.co.in/scapia-co-branded-credit-card",
+      "lastVerifiedAt": "2026-08-21",
+      "annualFee": 0,
+      "minIncome": 300000,
+      "applyUrl": "https://www.federalbank.co.in/scapia-co-branded-credit-card",
+      "imageUrl": "https://res.cloudinary.com/demo/image/upload/scapia-federal.png",
+      "multipliers": [
+        { "category": "Travel", "rewardRate": 0.20, "maxCap": null },
+        { "category": "Other", "rewardRate": 0.10, "maxCap": null }
+      ]
+    },
+    {
+      "cardName": "AU LIT Credit Card",
+      "bankName": "AU Small Finance Bank",
+      "sourceUrl": "https://www.aubank.in/personal-banking/credit-cards/lit-credit-card",
+      "lastVerifiedAt": "2026-08-21",
+      "annualFee": 0,
+      "minIncome": 300000,
+      "applyUrl": "https://www.aubank.in/personal-banking/credit-cards/lit-credit-card",
+      "imageUrl": "https://res.cloudinary.com/demo/image/upload/au-lit.png",
+      "multipliers": [
+        { "category": "Other", "rewardRate": 0.05, "maxCap": 1000 },
+        { "category": "Other", "rewardRate": 0.01, "maxCap": null }
+      ]
+    },
+    {
+      "cardName": "Paisabazaar PaisaSave Credit Card",
+      "bankName": "YES BANK",
+      "sourceUrl": "https://www.paisabazaar.com/credit-card/yes-bank-paisabazaar-paisasave-credit-card/",
+      "lastVerifiedAt": "2026-08-21",
+      "annualFee": 499,
+      "minIncome": 300000,
+      "applyUrl": "https://www.paisabazaar.com/credit-card/yes-bank-paisabazaar-paisasave-credit-card/",
+      "imageUrl": "https://res.cloudinary.com/demo/image/upload/yes-paisasave.png",
+      "multipliers": [
+        { "category": "Travel", "rewardRate": 0.06, "maxCap": 3000 },
+        { "category": "Other", "rewardRate": 0.01, "maxCap": null }
+      ]
+    },
+    {
+      "cardName": "American Express SmartEarn Credit Card",
+      "bankName": "American Express",
+      "sourceUrl": "https://www.americanexpress.com/in/credit-cards/smartearn-credit-card/",
+      "lastVerifiedAt": "2026-08-21",
+      "annualFee": 495,
+      "minIncome": 450000,
+      "applyUrl": "https://www.americanexpress.com/in/credit-cards/smartearn-credit-card/",
+      "imageUrl": "https://res.cloudinary.com/demo/image/upload/amex-smartearn.png",
+      "multipliers": [
+        { "category": "Dining", "rewardRate": 0.02, "maxCap": 500 },
+        { "category": "Shopping", "rewardRate": 0.01, "maxCap": 250 },
+        { "category": "Other", "rewardRate": 0.002, "maxCap": null }
+      ]
+    },
+    {
+      "cardName": "ICICI Coral Credit Card",
+      "bankName": "ICICI Bank",
+      "sourceUrl": "https://www.icicibank.com/personal-banking/cards/credit-card/coral-credit-card",
+      "lastVerifiedAt": "2026-08-21",
+      "annualFee": 500,
+      "minIncome": 360000,
+      "applyUrl": "https://www.icicibank.com/personal-banking/cards/credit-card/coral-credit-card",
+      "imageUrl": "https://res.cloudinary.com/demo/image/upload/icici-coral.png",
+      "multipliers": [
+        { "category": "Other", "rewardRate": 0.005, "maxCap": null }
+      ]
+    },
+    {
+      "cardName": "BOBCARD Eterna Credit Card",
+      "bankName": "BOBCARD",
+      "sourceUrl": "https://www.bobcard.co.in/credit-cards/eterna",
+      "lastVerifiedAt": "2026-08-21",
+      "annualFee": 2499,
+      "minIncome": 1200000,
+      "applyUrl": "https://www.bobcard.co.in/credit-cards/eterna",
+      "imageUrl": "https://res.cloudinary.com/demo/image/upload/bob-eterna.png",
+      "multipliers": [
+        { "category": "Travel", "rewardRate": 0.0375, "maxCap": null },
+        { "category": "Other", "rewardRate": 0.0075, "maxCap": null }
+      ]
+    },
+    {
+      "cardName": "Standard Chartered Smart Credit Card",
+      "bankName": "Standard Chartered",
+      "sourceUrl": "https://www.sc.com/in/credit-cards/smart/",
+      "lastVerifiedAt": "2026-08-21",
+      "annualFee": 499,
+      "minIncome": 400000,
+      "applyUrl": "https://www.sc.com/in/credit-cards/smart/",
+      "imageUrl": "https://res.cloudinary.com/demo/image/upload/sc-smart.png",
+      "multipliers": [
+        { "category": "Online", "rewardRate": 0.02, "maxCap": 1000 },
+        { "category": "Other", "rewardRate": 0.01, "maxCap": 500 }
+      ]
+    },
+    {
+      "cardName": "Kotak League Platinum Credit Card",
+      "bankName": "Kotak Mahindra Bank",
+      "sourceUrl": "https://www.kotak.com/en/personal-banking/cards/credit-cards/league-platinum-card.html",
+      "lastVerifiedAt": "2026-08-21",
+      "annualFee": 499,
+      "minIncome": 500000,
+      "applyUrl": "https://www.kotak.com/en/personal-banking/cards/credit-cards/league-platinum-card.html",
+      "imageUrl": "https://res.cloudinary.com/demo/image/upload/kotak-league.png",
+      "multipliers": [
+        { "category": "Travel", "rewardRate": 0.0125, "maxCap": null },
+        { "category": "Other", "rewardRate": 0.0125, "maxCap": null }
+      ]
+    }
+  ]
+}

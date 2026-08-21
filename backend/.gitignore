@@ -1,0 +1,24 @@
+# dependencies
+node_modules/
+
+# env / secrets — NEVER commit the real DATABASE_URL
+.env
+.env.local
+.env.*.local
+
+# build output
+dist/
+build/
+
+# prisma generated client (regenerated via `prisma generate`)
+# (kept out of git; run prisma:generate after install)
+
+# logs
+*.log
+npm-debug.log*
+
+# OS / editor
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/

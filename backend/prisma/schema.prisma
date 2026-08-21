@@ -1,0 +1,66 @@
+// Prisma schema — Indian Credit Card Recommender (Phase 1)
+// ---------------------------------------------------------------------------
+// ZERO-PII MANDATE: These are the ONLY tables. There is deliberately NO table,
+// column, or relation that stores user names, emails, phone numbers, PAN, or
+// any bank credentials. The recommendation request is stateless and anonymous.
+// ---------------------------------------------------------------------------
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+/// A curated credit card. Keep the catalogue small (top ~30–40 cards) and
+/// rigorously up to date rather than exhaustive.
+model Card {
+  id        String @id @default(uuid()) @db.Uuid
+  bankName  String @map("bank_name")
+  cardName  String @map("card_name")
+
+  /// Annual/renewal fee in whole INR (₹). 0 = lifetime free.
+  annualFee Int    @map("annual_fee")
+
+  /// Minimum ANNUAL income required in whole INR (₹). Used by the hard filter:
+  /// a card is dropped when min_income > the user's annual_income.
+  minIncome Int    @map("min_income")
+
+  /// High-resolution card image. URL only — hosted on Cloudinary / supplied by
+  /// the affiliate network. We never host bank logos directly.
+  imageUrl  String @map("image_url")
+
+  /// Outbound affiliate "Apply Now" link (tracking URL from EarnKaro/GroMo/etc.).
+  applyUrl  String @map("apply_url")
+
+  multipliers CardMultiplier[]
+
+  @@map("cards")
+}
+
+/// Per-category reward rate for a card.
+model CardMultiplier {
+  id       String @id @default(uuid()) @db.Uuid
+  cardId   String @map("card_id") @db.Uuid
+
+  /// Spend category, e.g. "Travel", "Fuel", "Dining", "Shopping", "Online".
+  /// The special category "Other" is treated as the card's base/everything-else
+  /// rate and is used as a fallback when the user's chosen category has no
+  /// specific multiplier on this card.
+  category String
+
+  /// Effective reward VALUE as a fraction of spend (NOT a percentage number):
+  /// 0.05 = 5% back. Monthly reward = monthly_spend * reward_rate.
+  rewardRate Decimal @map("reward_rate") @db.Decimal(6, 4)
+
+  /// Optional MONTHLY cap on the reward value in whole INR (₹). Null = uncapped.
+  /// The cap is applied to the monthly reward BEFORE multiplying by 12.
+  maxCap Int? @map("max_cap")
+
+  card Card @relation(fields: [cardId], references: [id], onDelete: Cascade)
+
+  @@index([cardId])
+  @@map("card_multipliers")
+}
