@@ -14,7 +14,8 @@
     "db:migrate": "prisma migrate dev --name init",
     "seed": "node prisma/seed.ts",
     "catalogue:check": "node prisma/validate-catalogue.ts",
-    "catalogue:fetch": "node catalogue/fetch-sources.ts"
+    "catalogue:fetch": "node catalogue/fetch-sources.ts",
+    "catalogue:extract": "node catalogue/extract-catalogue.ts"
   },
   "prisma": {
     "seed": "node prisma/seed.ts"

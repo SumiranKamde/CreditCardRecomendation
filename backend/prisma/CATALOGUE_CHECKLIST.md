@@ -61,3 +61,18 @@ writes `catalogue/source-snapshots.json` containing HTTP status, fetch time,
 content length, and a SHA-256 hash. It does not extract facts, edit the database,
 or promote catalogue data. A later extraction step can use changed hashes to
 send only changed issuer sources to an LLM for structured-draft generation.
+
+## Automated LLM extraction
+
+Configure the LLM outside the repository, then run:
+
+```powershell
+$env:LLM_API_KEY = "your-key"
+$env:LLM_API_URL = "https://api.openai.com/v1/chat/completions"
+$env:LLM_MODEL = "gpt-4o-mini"
+npm run catalogue:extract
+```
+
+The extractor creates `catalogue/llm-draft.json`, which is ignored by Git. It
+does not create affiliate links, invent missing facts, update `seed.ts`, or write
+to Neon. Run `npm run catalogue:check` against a reviewed draft before promotion.

@@ -13,6 +13,7 @@
 
 # Generated catalogue audit output
 backend/catalogue/source-snapshots.json
+backend/catalogue/llm-draft.json
 
 # Logs
 **/*.log
@@ -23,9 +24,6 @@ npm-debug.log*
 .idea/
 .DS_Store
 Thumbs.db
-
-# Preserved nested repository metadata
-frontend/.git.frontend-history/
 
 # Preserved nested repository metadata
 frontend/.git.frontend-history/
