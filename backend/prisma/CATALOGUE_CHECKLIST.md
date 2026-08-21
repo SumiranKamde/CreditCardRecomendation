@@ -47,3 +47,17 @@ remain pending during curation, but must be replaced before production promotion
 Run `npm run catalogue:check` before importing or promoting a catalogue. The
 current worksheet is expected to fail until its null fields are replaced with
 verified values and approved affiliate assets.
+
+## Automated source audit
+
+Run this from `backend/`:
+
+```bash
+npm run catalogue:fetch
+```
+
+The command reads every worksheet `sourceUrl`, fetches it with a timeout, and
+writes `catalogue/source-snapshots.json` containing HTTP status, fetch time,
+content length, and a SHA-256 hash. It does not extract facts, edit the database,
+or promote catalogue data. A later extraction step can use changed hashes to
+send only changed issuer sources to an LLM for structured-draft generation.

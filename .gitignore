@@ -11,6 +11,9 @@
 **/dist/
 **/build/
 
+# Generated catalogue audit output
+backend/catalogue/source-snapshots.json
+
 # Logs
 **/*.log
 npm-debug.log*
