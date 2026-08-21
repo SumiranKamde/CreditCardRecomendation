@@ -9,9 +9,10 @@ import type {
   RecommendationsResponse,
 } from "./types.ts";
 
-const API_BASE_URL =
-  process.env.NEXT_PUBLIC_API_BASE_URL?.replace(/\/$/, "") ??
-  "http://localhost:4000";
+// Use the Next.js same-origin proxy by default. Set NEXT_PUBLIC_API_URL only
+// when the frontend must call a separately deployed API origin.
+const API_BASE_URL = (process.env.NEXT_PUBLIC_API_URL ?? "").replace(/\/$/, "");
+const API_DISPLAY_URL = API_BASE_URL || "the local API proxy";
 
 /** A message already written for the person reading it, plus a retry hint. */
 export class ApiError extends Error {}
@@ -37,7 +38,7 @@ export async function fetchRecommendations(
   } catch (err) {
     if (err instanceof DOMException && err.name === "AbortError") throw err;
     throw new ApiError(
-      `Can't reach the recommendation API at ${API_BASE_URL}. Start the backend, then move a slider to retry.`,
+      `Can't reach the recommendation API at ${API_DISPLAY_URL}. Start the backend, then move a slider to retry.`,
     );
   }
 
