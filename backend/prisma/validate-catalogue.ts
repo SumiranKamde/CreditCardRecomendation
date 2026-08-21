@@ -23,6 +23,7 @@ const document = JSON.parse(await readFile(filePath, "utf8")) as {
   cards?: CatalogueCard[];
 };
 const errors: string[] = [];
+const warnings: string[] = [];
 const seenNames = new Set<string>();
 
 function isPlaceholderUrl(value: string): boolean {
@@ -55,11 +56,13 @@ for (const [index, card] of (document.cards ?? []).entries()) {
     errors.push(`${label}: minIncome must be a non-negative annual amount.`);
   }
 
-  for (const field of ["sourceUrl", "applyUrl", "imageUrl"] as const) {
+  for (const field of ["sourceUrl", "applyUrl"] as const) {
     const value = card[field];
     if (!value) errors.push(`${label}: ${field} is required.`);
     if (value && isPlaceholderUrl(value)) errors.push(`${label}: ${field} uses a placeholder URL.`);
   }
+  if (!card.imageUrl) warnings.push(`${label}: imageUrl is pending.`);
+  else if (isPlaceholderUrl(card.imageUrl)) warnings.push(`${label}: imageUrl is a placeholder and remains pending.`);
   if (card.applyUrl && !/^https:\/\//i.test(card.applyUrl)) errors.push(`${label}: applyUrl must use HTTPS.`);
   if (card.sourceUrl && !/^https:\/\//i.test(card.sourceUrl)) errors.push(`${label}: sourceUrl must use HTTPS.`);
 
@@ -88,4 +91,9 @@ if (errors.length > 0) {
   process.exitCode = 1;
 } else {
   console.log(`Catalogue validation passed for ${document.cards?.length ?? 0} card(s).`);
+}
+
+if (warnings.length > 0) {
+  console.warn(`Catalogue warnings (${warnings.length}):`);
+  for (const warning of warnings) console.warn(`- ${warning}`);
 }

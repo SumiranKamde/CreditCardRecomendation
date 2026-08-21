@@ -41,7 +41,8 @@ npm run seed
 After seeding, verify representative requests for each supported category and check
 that inactive cards are absent from the API response.
 
-The seed command also refuses to run when `NODE_ENV=production`.
+The seed command also refuses to run when `NODE_ENV=production`. Image assets may
+remain pending during curation, but must be replaced before production promotion.
 
 Run `npm run catalogue:check` before importing or promoting a catalogue. The
 current worksheet is expected to fail until its null fields are replaced with
