@@ -538,24 +538,29 @@ export default function Home() {
                     </span>
                   </div>
 
+                  {/* Net Annual Profit Highlight Banner */}
                   <div className="benefit">
                     <span className="benefit-label">Estimated Net Benefit / Year</span>
-                    <strong className="benefit-value">{formatRupees(card.netBenefit)}</strong>
+                    <strong className="benefit-value">
+                      {card.netBenefit >= 0 ? `+${formatRupees(card.netBenefit)}` : formatRupees(card.netBenefit)}
+                    </strong>
+                    <span className="benefit-subtext">after subtracting annual fee</span>
                   </div>
 
-                  <div className="card-details">
-                    <span>
-                      <small>Annual Fee</small>
-                      {formatRupees(card.annualFee)}
-                    </span>
-                    <span>
-                      <small>Est. Reward</small>
-                      {formatRupees(card.annualReward)}
-                    </span>
-                    <span>
-                      <small>Avg. Rate</small>
-                      {(card.rewardRateApplied * 100).toFixed(1)}%
-                    </span>
+                  {/* 3-Column Micro-Stats Grid */}
+                  <div className="card-details-grid">
+                    <div className="stat-box">
+                      <span className="stat-label">Annual Fee</span>
+                      <strong className="stat-value">{card.annualFee === 0 ? "Free (₹0)" : formatRupees(card.annualFee)}</strong>
+                    </div>
+                    <div className="stat-box">
+                      <span className="stat-label">Est. Rewards</span>
+                      <strong className="stat-value">{formatRupees(card.annualReward)}</strong>
+                    </div>
+                    <div className="stat-box">
+                      <span className="stat-label">Avg. Rate</span>
+                      <strong className="stat-value highlight">{(card.rewardRateApplied * 100).toFixed(1)}%</strong>
+                    </div>
                   </div>
 
                   {/* Dual Action Buttons */}
@@ -568,7 +573,7 @@ export default function Home() {
                         setSelectedModalCard(card);
                       }}
                     >
-                      View Benefits &amp; Specs
+                      <span>View Benefits &amp; Specs</span>
                     </button>
                     <a
                       className="apply-link"
@@ -587,10 +592,11 @@ export default function Home() {
                         });
                       }}
                     >
-                      <span>Apply</span>
+                      <span>Apply Now</span>
                       <span className="arrow-icon" aria-hidden="true">↗</span>
                     </a>
                   </div>
+
                 </article>
               ))}
             </div>
