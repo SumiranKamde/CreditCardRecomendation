@@ -8,8 +8,11 @@ import type {
   RecommendationsResponse,
 } from "./types.ts";
 
-const API_BASE_URL = (process.env.NEXT_PUBLIC_API_URL ?? "").replace(/\/$/, "");
-const API_DISPLAY_URL = API_BASE_URL || "the local API proxy";
+const API_BASE_URL = (
+  process.env.NEXT_PUBLIC_API_URL ||
+  process.env.NEXT_PUBLIC_API_BASE_URL ||
+  "http://localhost:4000"
+).replace(/\/$/, "");
 
 export class ApiError extends Error {}
 
@@ -17,7 +20,7 @@ export async function fetchRecommendations(
   input: RecommendationInput,
   signal: AbortSignal,
 ): Promise<RecommendationsResponse> {
-  let response: Response;
+  let response: Response | null = null;
 
   const payload: Record<string, unknown> = {
     monthlySpend: input.monthlySpend,
@@ -31,6 +34,7 @@ export async function fetchRecommendations(
     payload.topCategory = input.topCategory;
   }
 
+  // Attempt 1: Call configured API Base URL
   try {
     response = await fetch(`${API_BASE_URL}/api/recommendations`, {
       method: "POST",
@@ -38,16 +42,32 @@ export async function fetchRecommendations(
       body: JSON.stringify(payload),
       signal,
     });
-  } catch (err) {
-    if (err instanceof DOMException && err.name === "AbortError") throw err;
-    throw new ApiError(
-      `Can't reach the recommendation API at ${API_DISPLAY_URL}. Start the backend, then move a slider to retry.`,
-    );
+  } catch (primaryErr) {
+    if (primaryErr instanceof DOMException && primaryErr.name === "AbortError") throw primaryErr;
+    
+    // Attempt 2: Fallback to Next.js same-origin proxy if primary endpoint errored
+    try {
+      response = await fetch(`/api/recommendations`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload),
+        signal,
+      });
+    } catch (fallbackErr) {
+      if (fallbackErr instanceof DOMException && fallbackErr.name === "AbortError") throw fallbackErr;
+      throw new ApiError(
+        `Unable to reach the recommendation API at ${API_BASE_URL}. Ensure the backend service is running on port 4000.`,
+      );
+    }
+  }
+
+  if (!response) {
+    throw new ApiError("No response received from the recommendation server.");
   }
 
   if (response.status === 429) {
     throw new ApiError(
-      "Too many requests in the last minute. Wait a few seconds, then move a slider to retry.",
+      "Too many requests in the last minute. Wait a few seconds, then adjust a slider to retry.",
     );
   }
 

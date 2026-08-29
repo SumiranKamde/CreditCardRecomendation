@@ -7,6 +7,7 @@ import { formatINR } from "./lib/format";
 import type { ScoredCard } from "./lib/types";
 import { trackEvent } from "./lib/analytics";
 import CardImage from "./components/CardImage";
+import CardDetailModal from "./components/CardDetailModal";
 import CategoryMultiSelect from "./components/CategoryMultiSelect";
 import FaqSection from "./components/FaqSection";
 import SocialShare from "./components/SocialShare";
@@ -77,6 +78,7 @@ export default function Home() {
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string>("");
   const [activePreset, setActivePreset] = useState<string | null>(null);
+  const [selectedModalCard, setSelectedModalCard] = useState<ScoredCard | null>(null);
 
   const resultsRef = useRef<HTMLDivElement>(null);
   const abortRef = useRef<AbortController | null>(null);
@@ -470,8 +472,17 @@ export default function Home() {
               {sortedRecommendations.map((card, index) => (
                 <article
                   role="listitem"
-                  className={`recommendation-card ${index === 0 ? "featured-card" : ""}`}
+                  className={`recommendation-card ${index === 0 ? "featured-card" : ""} is-clickable`}
                   key={card.id}
+                  onClick={() => setSelectedModalCard(card)}
+                  tabIndex={0}
+                  onKeyDown={(e) => {
+                    if (e.key === "Enter" || e.key === " ") {
+                      e.preventDefault();
+                      setSelectedModalCard(card);
+                    }
+                  }}
+                  aria-label={`View full benefits and how to apply for ${card.cardName}`}
                 >
                   <div className="card-topline">
                     <span className="rank">Rank 0{index + 1}</span>
@@ -529,25 +540,39 @@ export default function Home() {
                     </span>
                   </div>
 
-                  <a
-                    className="apply-link"
-                    href={card.applyUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    onClick={() =>
-                      trackEvent({
-                        name: "click_apply_link",
-                        properties: {
-                          cardName: card.cardName,
-                          bankName: card.bankName,
-                          url: card.applyUrl,
-                        },
-                      })
-                    }
-                  >
-                    <span>View Card &amp; Apply</span>
-                    <span className="arrow-icon" aria-hidden="true">↗</span>
-                  </a>
+                  {/* Dual Action Buttons */}
+                  <div className="card-actions-row">
+                    <button
+                      type="button"
+                      className="card-details-trigger-btn"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        setSelectedModalCard(card);
+                      }}
+                    >
+                      View Benefits &amp; Specs
+                    </button>
+                    <a
+                      className="apply-link"
+                      href={card.applyUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        trackEvent({
+                          name: "click_apply_link",
+                          properties: {
+                            cardName: card.cardName,
+                            bankName: card.bankName,
+                            url: card.applyUrl,
+                          },
+                        });
+                      }}
+                    >
+                      <span>Apply</span>
+                      <span className="arrow-icon" aria-hidden="true">↗</span>
+                    </a>
+                  </div>
                 </article>
               ))}
             </div>
@@ -590,6 +615,14 @@ export default function Home() {
           <a href="#top">Back to Top ↑</a>
         </div>
       </footer>
+
+      {/* Animated Pop-Up Card Detail Modal */}
+      <CardDetailModal
+        card={selectedModalCard}
+        monthlySpend={monthlySpend}
+        selectedCategories={selectedCategories}
+        onClose={() => setSelectedModalCard(null)}
+      />
     </main>
   );
 }
