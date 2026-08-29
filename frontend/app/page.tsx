@@ -1,62 +1,57 @@
 "use client";
 
-import { FormEvent, useState } from "react";
+import { FormEvent, useEffect, useRef, useState } from "react";
+import { ApiError, fetchRecommendations } from "./lib/api";
+import { formatINR } from "./lib/format";
+import type { ScoredCard } from "./lib/types";
 
-type Recommendation = {
-  id: string;
-  bankName: string;
-  cardName: string;
-  annualFee: number;
-  minIncome: number;
-  imageUrl: string;
-  applyUrl: string;
-  categoryMatched: string;
-  rewardRateApplied: number;
-  monthlyReward: number;
-  annualReward: number;
-  netBenefit: number;
-  capApplied: boolean;
-  approvalSignal: "high" | "eligible";
-};
-
-const API_URL = process.env.NEXT_PUBLIC_API_URL ?? "";
-const API_DISPLAY_URL = API_URL || "http://localhost:4000";
+const API_DISPLAY_URL =
+  process.env.NEXT_PUBLIC_API_BASE_URL?.replace(/\/$/, "") || "http://localhost:4000";
 const categories = ["Online", "Shopping", "Dining", "Travel", "Fuel", "Other"];
 
+// Kept as a thin wrapper so existing call sites below read the same as before.
 function formatRupees(value: number) {
-  return new Intl.NumberFormat("en-IN", {
-    style: "currency",
-    currency: "INR",
-    maximumFractionDigits: 0,
-  }).format(value);
+  return formatINR(value);
 }
 
 export default function Home() {
   const [monthlySpend, setMonthlySpend] = useState(25000);
   const [annualIncome, setAnnualIncome] = useState(800000);
   const [topCategory, setTopCategory] = useState("Online");
-  const [recommendations, setRecommendations] = useState<Recommendation[]>([]);
+  const [recommendations, setRecommendations] = useState<ScoredCard[]>([]);
   const [submitted, setSubmitted] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
+  const abortRef = useRef<AbortController | null>(null);
+
+  // Cancel any in-flight request if the component unmounts mid-fetch.
+  useEffect(() => {
+    return () => abortRef.current?.abort();
+  }, []);
 
   async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
+    abortRef.current?.abort();
+    const controller = new AbortController();
+    abortRef.current = controller;
+
     setLoading(true);
     setError("");
 
     try {
-      const response = await fetch(`${API_URL}/api/recommendations`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ monthlySpend, topCategory, annualIncome }),
-      });
-      const data = await response.json();
-      if (!response.ok) throw new Error(data.error ?? "Unable to calculate recommendations.");
+      const data = await fetchRecommendations(
+        { monthlySpend, topCategory, annualIncome },
+        controller.signal,
+      );
       setRecommendations(data.recommendations ?? []);
       setSubmitted(true);
     } catch (requestError) {
-      setError(requestError instanceof Error ? requestError.message : "Unable to reach the recommendation engine.");
+      if (requestError instanceof DOMException && requestError.name === "AbortError") return;
+      setError(
+        requestError instanceof ApiError
+          ? requestError.message
+          : "Unable to reach the recommendation engine.",
+      );
     } finally {
       setLoading(false);
     }

@@ -12,13 +12,14 @@
       "bankName": "SBI Card",
       "sourceUrl": "https://www.sbicard.com/en/personal/credit-cards/cashback-sbi-card.html",
       "lastVerifiedAt": "2026-08-21",
+      "_correction": "minIncome was 500000; issuer/aggregator sources indicate ~Rs.25,000-30,000/month (~Rs.300,000/year). Cap was 5000; a Feb-2026 SBI revision lowered both caps to Rs.2,000/month each (Rs.4,000 combined). Verified 2026-08-22.",
       "annualFee": 999,
-      "minIncome": 500000,
+      "minIncome": 300000,
       "applyUrl": "https://www.sbicard.com/en/personal/credit-cards/cashback-sbi-card.html",
       "imageUrl": "https://res.cloudinary.com/demo/image/upload/sbi-cashback.png",
       "multipliers": [
-        { "category": "Online", "rewardRate": 0.05, "maxCap": 5000 },
-        { "category": "Other", "rewardRate": 0.01, "maxCap": null }
+        { "category": "Online", "rewardRate": 0.05, "maxCap": 2000 },
+        { "category": "Other", "rewardRate": 0.01, "maxCap": 2000 }
       ]
     },
     {
@@ -40,10 +41,12 @@
       "bankName": "Axis Bank",
       "sourceUrl": "https://www.axisbank.com/retail/cards/credit-card/axis-bank-ace-credit-card",
       "lastVerifiedAt": "2026-08-21",
+      "_correction": "minIncome was 600000; issuer-stated minimum is Rs.25,000/month (Rs.3,00,000/year) per multiple aggregator sources. Verified 2026-08-22.",
       "annualFee": 499,
-      "minIncome": 600000,
+      "minIncome": 300000,
       "applyUrl": "https://www.axisbank.com/retail/cards/credit-card/axis-bank-ace-credit-card",
       "imageUrl": "https://res.cloudinary.com/demo/image/upload/axis-ace.png",
+      "_note": "SIMPLIFIED: the Rs.500/month cap is shared across the 5% (Google Pay bills) and 4% (Swiggy/Zomato/Ola) categories combined; modeling them as two separately-capped rules can overstate combined value for very high spenders in both categories at once.",
       "multipliers": [
         { "category": "Online", "rewardRate": 0.05, "maxCap": 500 },
         { "category": "Dining", "rewardRate": 0.04, "maxCap": 500 },
@@ -55,10 +58,12 @@
       "bankName": "ICICI Bank",
       "sourceUrl": "https://www.icicibank.com/personal-banking/cards/amazon-pay-credit-card",
       "lastVerifiedAt": "2026-08-21",
+      "_correction": "minIncome was 300000; issuer minimum is Rs.20,000/month salaried (Rs.240,000/year) per SaveSage Club review, verified 2026-08-22.",
       "annualFee": 0,
-      "minIncome": 300000,
+      "minIncome": 240000,
       "applyUrl": "https://www.icicibank.com/personal-banking/cards/amazon-pay-credit-card",
       "imageUrl": "https://res.cloudinary.com/demo/image/upload/icici-amazon-pay.png",
+      "_note": "SIMPLIFIED: the 5% Shopping rate requires Amazon Prime membership; non-Prime members get 3% on Amazon. Using the higher Prime rate as the ceiling case.",
       "multipliers": [
         { "category": "Shopping", "rewardRate": 0.05, "maxCap": null },
         { "category": "Online", "rewardRate": 0.02, "maxCap": null },
@@ -70,14 +75,16 @@
       "bankName": "Axis Bank",
       "sourceUrl": "https://www.axisbank.com/retail/cards/credit-card/flipkart-axis-bank-credit-card",
       "lastVerifiedAt": "2026-08-21",
+      "_correction": "Other/base rate was 0.015; issuer-stated base rate is 1% per Paisabazaar, verified 2026-08-22. minIncome left unchanged (no contradicting source found).",
       "annualFee": 500,
       "minIncome": 300000,
       "applyUrl": "https://www.axisbank.com/retail/cards/credit-card/flipkart-axis-bank-credit-card",
       "imageUrl": "https://res.cloudinary.com/demo/image/upload/axis-flipkart.png",
+      "_note": "SIMPLIFIED: real 4% partner-brand rate applies to Uber/Swiggy/PVR/cult.fit, a mix that spans our Dining/Travel taxonomy; mapped to Travel since Cleartrip (travel) also qualifies at 5%. Myntra's separate 7.5% rate isn't modeled.",
       "multipliers": [
         { "category": "Shopping", "rewardRate": 0.05, "maxCap": null },
         { "category": "Travel", "rewardRate": 0.04, "maxCap": null },
-        { "category": "Other", "rewardRate": 0.015, "maxCap": null }
+        { "category": "Other", "rewardRate": 0.01, "maxCap": null }
       ]
     },
     {
@@ -85,8 +92,9 @@
       "bankName": "HDFC Bank",
       "sourceUrl": "https://www.hdfcbank.com/personal/pay/cards/swiggy-hdfc-bank-credit-card",
       "lastVerifiedAt": "2026-08-21",
+      "_correction": "minIncome was 300000; issuer-stated minimum is Rs.15,000/month salaried (Rs.180,000/year) per HDFC Bank's own eligibility page, verified 2026-08-22.",
       "annualFee": 500,
-      "minIncome": 300000,
+      "minIncome": 180000,
       "applyUrl": "https://www.hdfcbank.com/personal/pay/cards/swiggy-hdfc-bank-credit-card",
       "imageUrl": "https://res.cloudinary.com/demo/image/upload/hdfc-swiggy.png",
       "multipliers": [
@@ -104,10 +112,10 @@
       "minIncome": 300000,
       "applyUrl": "https://www.axisbank.com/retail/cards/credit-card/airtel-axis-bank-credit-card",
       "imageUrl": "https://res.cloudinary.com/demo/image/upload/axis-airtel.png",
+      "_note": "SIMPLIFIED: real card cashback caps became dynamic (tied to base cashback earned that cycle) from 12-Apr-2026; flat rewardRate/maxCap cannot represent this. rewardRate/maxCap below are a conservative approximation of the pre-2026-04-12 fixed caps, not the current live terms. Needs manual review before production.",
       "multipliers": [
-        { "category": "Online", "rewardRate": 0.25, "maxCap": 250 },
         { "category": "Online", "rewardRate": 0.10, "maxCap": 250 },
-        { "category": "Dining", "rewardRate": 0.10, "maxCap": 500 },
+        { "category": "Dining", "rewardRate": 0.10, "maxCap": 250 },
         { "category": "Other", "rewardRate": 0.01, "maxCap": null }
       ]
     },
@@ -130,8 +138,9 @@
       "bankName": "SBI Card",
       "sourceUrl": "https://www.sbicard.com/en/personal/credit-cards/shopping/simplyclick-sbi-card.page",
       "lastVerifiedAt": "2026-08-21",
+      "_correction": "minIncome was 300000; issuer/aggregator sources indicate Rs.20,000/month (Rs.240,000/year), verified 2026-08-22.",
       "annualFee": 499,
-      "minIncome": 300000,
+      "minIncome": 240000,
       "applyUrl": "https://www.sbicard.com/en/personal/credit-cards/shopping/simplyclick-sbi-card.page",
       "imageUrl": "https://res.cloudinary.com/demo/image/upload/sbi-simplyclick.png",
       "multipliers": [
@@ -145,8 +154,9 @@
       "bankName": "SBI Card",
       "sourceUrl": "https://www.sbicard.com/en/personal/credit-cards/shopping/simplysave-sbi-card.page",
       "lastVerifiedAt": "2026-08-21",
+      "_correction": "minIncome was 300000; issuer/aggregator sources indicate Rs.20,000/month (Rs.240,000/year), verified 2026-08-22.",
       "annualFee": 499,
-      "minIncome": 300000,
+      "minIncome": 240000,
       "applyUrl": "https://www.sbicard.com/en/personal/credit-cards/shopping/simplysave-sbi-card.page",
       "imageUrl": "https://res.cloudinary.com/demo/image/upload/sbi-simplysave.png",
       "multipliers": [
@@ -163,8 +173,8 @@
       "minIncome": 1200000,
       "applyUrl": "https://www.hdfcbank.com/personal/pay/cards/tata-neu-infinity-hdfc-bank-credit-card",
       "imageUrl": "https://res.cloudinary.com/demo/image/upload/hdfc-tataneu-infinity.png",
+      "_note": "SIMPLIFIED: 5% base on Tata Neu app spends, +5% more requires separate NeuPass registration (up to 10% combined) on select categories only; 5% on Tata partner brands. Using the guaranteed 5% base (no NeuPass dependency) rather than the conditional 10% ceiling.",
       "multipliers": [
-        { "category": "Shopping", "rewardRate": 0.10, "maxCap": null },
         { "category": "Shopping", "rewardRate": 0.05, "maxCap": null },
         { "category": "Other", "rewardRate": 0.015, "maxCap": null }
       ]
@@ -178,8 +188,8 @@
       "minIncome": 300000,
       "applyUrl": "https://www.hdfcbank.com/personal/pay/cards/tata-neu-plus-hdfc-bank-credit-card",
       "imageUrl": "https://res.cloudinary.com/demo/image/upload/hdfc-tataneu-plus.png",
+      "_note": "SIMPLIFIED: 2% base on Tata Neu/partner brand spends, +5% more requires separate NeuPass registration (up to 7% combined) on select categories only. Using the guaranteed 2% base rather than the conditional 7% ceiling.",
       "multipliers": [
-        { "category": "Shopping", "rewardRate": 0.07, "maxCap": null },
         { "category": "Shopping", "rewardRate": 0.02, "maxCap": null },
         { "category": "Other", "rewardRate": 0.01, "maxCap": null }
       ]
@@ -193,10 +203,12 @@
       "minIncome": 300000,
       "applyUrl": "https://www.idfcfirstbank.com/personal-banking/cards/credit-card/millennia-credit-card",
       "imageUrl": "https://res.cloudinary.com/demo/image/upload/idfc-millennia.png",
+      "_note": "SIMPLIFIED: real card is point-based (1 RP = Rs 0.25) with spend-tiered multipliers (e.g. 10X on Dining/Travel/International from first transaction, tiered 3X-10X on Online by monthly spend). A flat per-category rate cannot capture the spend tiers; figures below are approximate base/accelerated rates. Needs manual review before production.",
       "multipliers": [
-        { "category": "Other", "rewardRate": 0.025, "maxCap": null },
+        { "category": "Dining", "rewardRate": 0.025, "maxCap": null },
+        { "category": "Travel", "rewardRate": 0.025, "maxCap": null },
         { "category": "Online", "rewardRate": 0.015, "maxCap": null },
-        { "category": "Other", "rewardRate": 0.0075, "maxCap": null }
+        { "category": "Other", "rewardRate": 0.0025, "maxCap": null }
       ]
     },
     {
@@ -208,10 +220,12 @@
       "minIncome": 500000,
       "applyUrl": "https://www.idfcfirstbank.com/personal-banking/cards/credit-card/select-credit-card",
       "imageUrl": "https://res.cloudinary.com/demo/image/upload/idfc-select.png",
+      "_note": "SIMPLIFIED: same point-based, spend-tiered reward system as IDFC First Millennia (see its note). Needs manual review before production.",
       "multipliers": [
-        { "category": "Other", "rewardRate": 0.025, "maxCap": null },
-        { "category": "Online", "rewardRate": 0.015, "maxCap": null },
-        { "category": "Other", "rewardRate": 0.0075, "maxCap": null }
+        { "category": "Dining", "rewardRate": 0.025, "maxCap": null },
+        { "category": "Travel", "rewardRate": 0.025, "maxCap": null },
+        { "category": "Online", "rewardRate": 0.017, "maxCap": null },
+        { "category": "Other", "rewardRate": 0.003, "maxCap": null }
       ]
     },
     {
@@ -219,14 +233,17 @@
       "bankName": "IDFC FIRST Bank",
       "sourceUrl": "https://www.idfcfirstbank.com/personal-banking/cards/credit-card/wealth-credit-card",
       "lastVerifiedAt": "2026-08-21",
+      "_correction": "minIncome was 1200000 in the earlier draft; issuer-stated minimum is Rs. 36 Lakh/year per Paisabazaar (paisabazaar.com/idfc-first-bank/idfc-first-wealth-credit-card/, verified 2026-08-22). Corrected below.",
       "annualFee": 0,
-      "minIncome": 1200000,
+      "minIncome": 3600000,
       "applyUrl": "https://www.idfcfirstbank.com/personal-banking/cards/credit-card/wealth-credit-card",
       "imageUrl": "https://res.cloudinary.com/demo/image/upload/idfc-wealth.png",
+      "_note": "SIMPLIFIED: same point-based, spend-tiered reward system as IDFC First Millennia (see its note), with a richer 10X category set (Dining/Travel/International from first transaction). Needs manual review before production.",
       "multipliers": [
-        { "category": "Other", "rewardRate": 0.025, "maxCap": null },
-        { "category": "Online", "rewardRate": 0.015, "maxCap": null },
-        { "category": "Other", "rewardRate": 0.0075, "maxCap": null }
+        { "category": "Dining", "rewardRate": 0.025, "maxCap": null },
+        { "category": "Travel", "rewardRate": 0.025, "maxCap": null },
+        { "category": "Online", "rewardRate": 0.02, "maxCap": null },
+        { "category": "Other", "rewardRate": 0.0038, "maxCap": null }
       ]
     },
     {
@@ -278,13 +295,14 @@
       "bankName": "HDFC Bank",
       "sourceUrl": "https://www.hdfcbank.com/personal/pay/cards/diners-club-privilege-credit-card",
       "lastVerifiedAt": "2026-08-21",
-      "annualFee": 1000,
+      "_correction": "annualFee was 1000 in the earlier draft; issuer-stated fee is Rs. 2,500 + GST (waived on Rs. 3L annual spend) per Paisabazaar (paisabazaar.com/hdfc-bank/diners-club-privilege-credit-card/, verified 2026-08-22). Corrected below.",
+      "annualFee": 2500,
       "minIncome": 840000,
       "applyUrl": "https://www.hdfcbank.com/personal/pay/cards/diners-club-privilege-credit-card",
       "imageUrl": "https://res.cloudinary.com/demo/image/upload/hdfc-diners-privilege.png",
+      "_note": "SIMPLIFIED: 4 RP/Rs.150 base (1.33%), 5X on Swiggy/Zomato dining (6.67%) with the bonus portion capped near Rs.1,250/month combined across accelerated categories; up to 10X (13.3%) on HDFC SmartBuy travel bookings only, not modeled. Needs manual review before production.",
       "multipliers": [
-        { "category": "Dining", "rewardRate": 0.0667, "maxCap": null },
-        { "category": "Dining", "rewardRate": 0.0133, "maxCap": null },
+        { "category": "Dining", "rewardRate": 0.0667, "maxCap": 1250 },
         { "category": "Other", "rewardRate": 0.0133, "maxCap": null }
       ]
     },
@@ -293,14 +311,15 @@
       "bankName": "HDFC Bank",
       "sourceUrl": "https://www.hdfcbank.com/personal/pay/cards/moneyback-plus-credit-card",
       "lastVerifiedAt": "2026-08-21",
+      "_correction": "minIncome was 300000 in the earlier draft; issuer-stated minimum is Rs. 20,000/month gross (Rs. 240,000/year) for salaried applicants per MyBankingTips (verified 2026-08-22). The old maxCap of 2500 also mistakenly used a raw CashPoint count instead of its Rs. value (2500 CP x Rs.0.25 = Rs.625) — corrected below.",
       "annualFee": 500,
-      "minIncome": 300000,
+      "minIncome": 240000,
       "applyUrl": "https://www.hdfcbank.com/personal/pay/cards/moneyback-plus-credit-card",
       "imageUrl": "https://res.cloudinary.com/demo/image/upload/hdfc-moneyback-plus.png",
+      "_note": "SIMPLIFIED: 10X CashPoints (~2.5%) on Amazon/Flipkart/Swiggy/BigBasket/Reliance Smart only, shared Rs.625/month cap across those categories combined; base 2 CashPoints/Rs.200 (~0.33%) elsewhere. Needs manual review before production.",
       "multipliers": [
-        { "category": "Shopping", "rewardRate": 0.025, "maxCap": 2500 },
-        { "category": "Other", "rewardRate": 0.0125, "maxCap": 2500 },
-        { "category": "Other", "rewardRate": 0.003, "maxCap": null }
+        { "category": "Shopping", "rewardRate": 0.025, "maxCap": 625 },
+        { "category": "Other", "rewardRate": 0.0033, "maxCap": null }
       ]
     },
     {
@@ -354,9 +373,9 @@
       "minIncome": 300000,
       "applyUrl": "https://www.aubank.in/personal-banking/credit-cards/lit-credit-card",
       "imageUrl": "https://res.cloudinary.com/demo/image/upload/au-lit.png",
+      "_note": "SIMPLIFIED & IMPORTANT: this is a 'build-your-own-card' product. The default/always-on reward is only 1 RP per Rs.100 (0.25%, base card price Rs.0), i.e. what's modeled below as Other. The 5% cashback previously shown here is an OPT-IN Feature Pack that costs an extra Rs.299/90-days — it is not a rate every cardholder earns, so it should not be presented as the card's baseline benefit without disclosing the added fee. Needs product-level review before production, not just a data fix.",
       "multipliers": [
-        { "category": "Other", "rewardRate": 0.05, "maxCap": 1000 },
-        { "category": "Other", "rewardRate": 0.01, "maxCap": null }
+        { "category": "Other", "rewardRate": 0.0025, "maxCap": null }
       ]
     },
     {
