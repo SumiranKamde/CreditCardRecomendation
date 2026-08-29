@@ -74,7 +74,7 @@ export default function Home() {
   const [selectedCategories, setSelectedCategories] = useState<string[]>(["Fuel", "Shopping"]);
   const [sortBy, setSortBy] = useState<SortOption>("netBenefit");
   const [recommendations, setRecommendations] = useState<ScoredCard[]>([]);
-  const [submitted, setSubmitted] = useState<boolean>(true); // Immediate recommendations on first view
+  const [submitted, setSubmitted] = useState<boolean>(false); // Don't show empty state until first API response
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string>("");
   const [activePreset, setActivePreset] = useState<string | null>(null);

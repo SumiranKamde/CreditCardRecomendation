@@ -34,18 +34,25 @@ export async function fetchRecommendations(
     payload.topCategory = input.topCategory;
   }
 
-  // Attempt 1: Call configured API Base URL
-  try {
-    response = await fetch(`${API_BASE_URL}/api/recommendations`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(payload),
-      signal,
-    });
-  } catch (primaryErr) {
-    if (primaryErr instanceof DOMException && primaryErr.name === "AbortError") throw primaryErr;
-    
-    // Attempt 2: Fallback to Next.js same-origin proxy if primary endpoint errored
+  const hasExternalApi = API_BASE_URL !== "http://localhost:4000";
+
+  // Attempt 1: If an external API is configured, try it first
+  if (hasExternalApi) {
+    try {
+      response = await fetch(`${API_BASE_URL}/api/recommendations`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload),
+        signal,
+      });
+    } catch (primaryErr) {
+      if (primaryErr instanceof DOMException && primaryErr.name === "AbortError") throw primaryErr;
+      // Fall through to built-in route
+    }
+  }
+
+  // Attempt 2: Use the built-in Next.js serverless route (always available on Vercel)
+  if (!response) {
     try {
       response = await fetch(`/api/recommendations`, {
         method: "POST",
@@ -56,7 +63,7 @@ export async function fetchRecommendations(
     } catch (fallbackErr) {
       if (fallbackErr instanceof DOMException && fallbackErr.name === "AbortError") throw fallbackErr;
       throw new ApiError(
-        `Unable to reach the recommendation API at ${API_BASE_URL}. Ensure the backend service is running on port 4000.`,
+        `Unable to reach the recommendation API. Please try again later.`,
       );
     }
   }
