@@ -185,5 +185,28 @@ test("returns empty array for empty catalogue", () => {
   assert.deepEqual(out, []);
 });
 
+// 13. Multiple categories test: Fuel (5%) + Shopping (2%)
+// spend 20000 split: 10000 on Fuel (500) + 10000 on Shopping (200) = 700/mo -> 8400/yr -> - 1000 fee = 7400
+test("scores multi-category blended spend accurately", () => {
+  const card = makeCard({
+    annualFee: 1000,
+    minIncome: 300000,
+    multipliers: [
+      { category: "Fuel", rewardRate: 0.05, maxCap: null },
+      { category: "Shopping", rewardRate: 0.02, maxCap: null },
+      { category: "Other", rewardRate: 0.01, maxCap: null },
+    ],
+  });
+  const input: RecommendationInput = {
+    monthlySpend: 20000,
+    selectedCategories: ["Fuel", "Shopping"],
+    annualIncome: 500000,
+  };
+  const r = scoreCard(card, input);
+  assert.equal(r.monthlyReward, 700);
+  assert.equal(r.annualReward, 8400);
+  assert.equal(r.netBenefit, 7400);
+});
+
 console.log(`\n${passed} passed, ${failed} failed\n`);
 if (failed > 0) process.exit(1);

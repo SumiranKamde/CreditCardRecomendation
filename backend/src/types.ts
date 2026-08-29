@@ -28,12 +28,14 @@ export interface Card {
   multipliers: CardMultiplier[];
 }
 
-/** The anonymous, zero-PII request payload. */
+/** The anonymous, zero-PII request payload. Supports single or multiple categories. */
 export interface RecommendationInput {
-  /** Monthly spend in the chosen category, in INR. */
+  /** Monthly spend in the chosen category/categories, in INR. */
   monthlySpend: number;
-  /** The category the user spends most on, e.g. "Fuel". */
-  topCategory: string;
+  /** The category or comma-separated list of categories, e.g. "Fuel, Shopping". */
+  topCategory?: string;
+  /** Array of selected categories for multi-category recommendation. */
+  selectedCategories?: string[];
   /** The user's annual income in INR. Used only for the eligibility filter. */
   annualIncome: number;
 }
@@ -52,9 +54,9 @@ export interface ScoredCard {
   imageUrl: string;
   applyUrl: string;
 
-  /** Which category rule was actually applied (may be the "Other" fallback). */
+  /** Which category rule(s) were actually applied (may be the "Other" fallback). */
   categoryMatched: string;
-  /** The reward rate applied, as a fraction (0.05 = 5%). */
+  /** The reward rate applied, as a fraction (0.05 = 5%). Average if multi-category. */
   rewardRateApplied: number;
   /** Monthly reward value in INR after applying any cap. */
   monthlyReward: number;
@@ -62,7 +64,7 @@ export interface ScoredCard {
   annualReward: number;
   /** Net Annual Benefit in INR: annualReward - annualFee. Can be negative. */
   netBenefit: number;
-  /** Whether the capped kicked in for this card/category. */
+  /** Whether the cap kicked in for this card/category. */
   capApplied: boolean;
   /** Heuristic approval signal from income headroom. */
   approvalSignal: ApprovalSignal;

@@ -1,6 +1,4 @@
-// Mirrors the Phase 1 API contract (backend/src/types.ts). Kept as a small hand
-// written copy rather than a shared package: the surface is three fields in and
-// one array out, and the frontend must never import Prisma types.
+// Mirrors the API contract (backend/src/types.ts).
 
 /** One scored card as returned by POST /api/recommendations. */
 export interface ScoredCard {
@@ -11,7 +9,7 @@ export interface ScoredCard {
   minIncome: number;
   imageUrl: string;
   applyUrl: string;
-  /** The category rule that was applied — falls back to "Other". */
+  /** The category rule(s) that were applied. */
   categoryMatched: string;
   /** A FRACTION: 0.05 means 5% back. */
   rewardRateApplied: number;
@@ -29,9 +27,10 @@ export interface RecommendationsResponse {
   recommendations: ScoredCard[];
 }
 
-/** The only three fields the API accepts — it rejects every other key. */
+/** Anonymous zero-PII recommendation payload. */
 export interface RecommendationInput {
   monthlySpend: number;
-  topCategory: string;
+  topCategory?: string;
+  selectedCategories?: string[];
   annualIncome: number;
 }

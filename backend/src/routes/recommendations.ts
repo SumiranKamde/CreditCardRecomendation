@@ -1,11 +1,11 @@
 // POST /api/recommendations
 // ---------------------------------------------------------------------------
 // The only write-nothing, read-only endpoint of Phase 1. It is deliberately
-// ANONYMOUS and STATELESS: it accepts three numbers/strings, runs the pure
+// ANONYMOUS and STATELESS: it accepts numbers/strings, runs the pure
 // scoring engine, and returns a sorted list. Nothing is persisted.
 //
 // Request body (JSON):
-//   { "monthlySpend": number>=0, "topCategory": string, "annualIncome": number>=0 }
+//   { "monthlySpend": number>=0, "topCategory"?: string, "selectedCategories"?: string[], "annualIncome": number>=0 }
 //
 // Response (200):
 //   { "count": number, "recommendations": ScoredCard[] }
@@ -25,7 +25,7 @@ export const recommendationsRouter: Router = Router();
 const MAX_RUPEES = 1_000_000_000;
 
 /**
- * PII gate. We only ever want the three anonymous fields; any key that looks
+ * PII gate. We only ever want the anonymous fields; any key that looks
  * like personal data is refused outright. Short/ambiguous tokens (that could
  * appear as substrings of innocent words) are matched as WHOLE normalized keys;
  * longer, unambiguous tokens are matched as substrings.
@@ -39,12 +39,14 @@ const PII_SUBSTRINGS = [
   "zipcode", "dateofbirth", "father", "mother", "location", "geo",
 ];
 
-/** The ONLY keys an anonymous request may carry. Anything else is refused.
- *  This is what stops PII nested inside an unexpected object/array (e.g.
- *  `{ meta: { email } }`) from slipping past the gate: the unexpected container
- *  key is rejected before we ever look inside, and the three allowed fields are
- *  all primitives (enforced below), so nothing can hide beneath them either. */
-const ALLOWED_KEYS = new Set(["monthlySpend", "topCategory", "annualIncome"]);
+/** The ONLY keys an anonymous request may carry. Anything else is refused. */
+const ALLOWED_KEYS = new Set([
+  "monthlySpend",
+  "topCategory",
+  "selectedCategories",
+  "categories",
+  "annualIncome",
+]);
 
 /** lowercase + strip everything but a–z0–9 so "e-mail" / "Phone_No" normalize. */
 function normalizeKey(key: string): string {
@@ -57,7 +59,7 @@ function looksLikePii(rawKey: string): boolean {
   return PII_EXACT.has(k) || PII_SUBSTRINGS.some((tok) => k.includes(tok));
 }
 
-/** First key that isn't one of the three allowed fields, or null if clean. */
+/** First key that isn't one of the allowed fields, or null if clean. */
 function findDisallowedKey(body: Record<string, unknown>): string | null {
   for (const rawKey of Object.keys(body)) {
     if (!ALLOWED_KEYS.has(rawKey)) return rawKey;
@@ -86,21 +88,21 @@ recommendationsRouter.post(
       return;
     }
 
-    // ZERO-PII: allow ONLY the three known fields. Any extra key is refused,
-    // which also blocks PII nested inside an unexpected object or array.
+    // ZERO-PII: allow ONLY the known fields.
     const badKey = findDisallowedKey(body as Record<string, unknown>);
     if (badKey) {
       res.status(400).json({
         error: looksLikePii(badKey)
-          ? "This is a zero-PII service. Send only monthlySpend, topCategory, and annualIncome."
-          : "Unexpected field. Send only monthlySpend, topCategory, and annualIncome.",
+          ? "This is a zero-PII service. Send only monthlySpend, categories/topCategory, and annualIncome."
+          : "Unexpected field. Send only monthlySpend, categories/topCategory, and annualIncome.",
         offendingKey: badKey,
       });
       return;
     }
 
-    // Validate the three required fields.
-    const { monthlySpend, topCategory, annualIncome } = body as Record<string, unknown>;
+    // Validate fields.
+    const { monthlySpend, topCategory, selectedCategories, categories, annualIncome } =
+      body as Record<string, unknown>;
     const errors: string[] = [];
 
     if (!isValidAmount(monthlySpend)) {
@@ -109,8 +111,19 @@ recommendationsRouter.post(
     if (!isValidAmount(annualIncome)) {
       errors.push(`annualIncome must be a number between 0 and ${MAX_RUPEES}.`);
     }
-    if (typeof topCategory !== "string" || topCategory.trim() === "") {
-      errors.push("topCategory must be a non-empty string.");
+
+    // Determine category list
+    let resolvedCategories: string[] = [];
+    if (Array.isArray(selectedCategories)) {
+      resolvedCategories = selectedCategories.filter((c) => typeof c === "string" && c.trim().length > 0);
+    } else if (Array.isArray(categories)) {
+      resolvedCategories = categories.filter((c) => typeof c === "string" && c.trim().length > 0);
+    } else if (typeof topCategory === "string" && topCategory.trim().length > 0) {
+      resolvedCategories = topCategory.split(",").map((c) => c.trim()).filter((c) => c.length > 0);
+    }
+
+    if (resolvedCategories.length === 0) {
+      errors.push("At least one spending category must be specified.");
     }
 
     if (errors.length > 0) {
@@ -118,10 +131,11 @@ recommendationsRouter.post(
       return;
     }
 
-    // Build the clean, typed input the scorer expects (ignore any extra keys).
+    // Build clean input
     const input: RecommendationInput = {
       monthlySpend: monthlySpend as number,
-      topCategory: (topCategory as string).trim(),
+      topCategory: resolvedCategories.join(", "),
+      selectedCategories: resolvedCategories,
       annualIncome: annualIncome as number,
     };
 

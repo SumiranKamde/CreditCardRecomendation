@@ -1,7 +1,6 @@
 // API client for the zero-PII recommendation endpoint.
 // ---------------------------------------------------------------------------
-// Sends EXACTLY the three allowed fields. The backend runs a strict allowlist
-// and rejects any other key with 400, so never spread extra state into body.
+// Sends ONLY allowed anonymous fields. The backend runs an allowlist gate.
 // ---------------------------------------------------------------------------
 
 import type {
@@ -9,12 +8,9 @@ import type {
   RecommendationsResponse,
 } from "./types.ts";
 
-// Use the Next.js same-origin proxy by default. Set NEXT_PUBLIC_API_URL only
-// when the frontend must call a separately deployed API origin.
 const API_BASE_URL = (process.env.NEXT_PUBLIC_API_URL ?? "").replace(/\/$/, "");
 const API_DISPLAY_URL = API_BASE_URL || "the local API proxy";
 
-/** A message already written for the person reading it, plus a retry hint. */
 export class ApiError extends Error {}
 
 export async function fetchRecommendations(
@@ -23,16 +19,23 @@ export async function fetchRecommendations(
 ): Promise<RecommendationsResponse> {
   let response: Response;
 
+  const payload: Record<string, unknown> = {
+    monthlySpend: input.monthlySpend,
+    annualIncome: input.annualIncome,
+  };
+
+  if (input.selectedCategories && input.selectedCategories.length > 0) {
+    payload.selectedCategories = input.selectedCategories;
+    payload.topCategory = input.selectedCategories.join(", ");
+  } else if (input.topCategory) {
+    payload.topCategory = input.topCategory;
+  }
+
   try {
     response = await fetch(`${API_BASE_URL}/api/recommendations`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      // Exactly three fields — see the allowlist note above.
-      body: JSON.stringify({
-        monthlySpend: input.monthlySpend,
-        topCategory: input.topCategory,
-        annualIncome: input.annualIncome,
-      }),
+      body: JSON.stringify(payload),
       signal,
     });
   } catch (err) {
