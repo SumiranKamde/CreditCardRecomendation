@@ -5,6 +5,7 @@
   "description": "Zero-PII Indian Credit Card Recommender — backend API (Phase 1)",
   "type": "module",
   "scripts": {
+    "build": "prisma generate && node prisma/seed-verified-catalogue.ts",
     "dev": "node --watch src/server.ts",
     "start": "node src/server.ts",
     "typecheck": "tsc --noEmit",
