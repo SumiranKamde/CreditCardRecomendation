@@ -23,7 +23,8 @@ export const viewport: Viewport = {
 };
 
 export const metadata: Metadata = {
-  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000"),
+  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || "https://ccrsk.vercel.app"),
+
   title: {
     default: "CCR | Zero-PII Indian Credit Card Recommender",
     template: "%s | CCR",
