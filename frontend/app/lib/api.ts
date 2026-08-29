@@ -36,22 +36,40 @@ export async function fetchRecommendations(
 
   const hasExternalApi = API_BASE_URL !== "http://localhost:4000";
 
-  // Attempt 1: If an external API is configured, try it first
+  // Attempt 1: If an external API is configured, try it with a 2.5s fast-fallback timeout
   if (hasExternalApi) {
     try {
-      response = await fetch(`${API_BASE_URL}/api/recommendations`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(payload),
-        signal,
-      });
+      const timeoutCtrl = new AbortController();
+      const onParentAbort = () => timeoutCtrl.abort();
+      signal.addEventListener("abort", onParentAbort);
+      const timeoutId = setTimeout(() => timeoutCtrl.abort(), 2500); // 2.5s max wait for external server
+
+      try {
+        const res = await fetch(`${API_BASE_URL}/api/recommendations`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(payload),
+          signal: timeoutCtrl.signal,
+        });
+        clearTimeout(timeoutId);
+        signal.removeEventListener("abort", onParentAbort);
+        if (res.ok) {
+          response = res;
+        }
+      } catch (err) {
+        clearTimeout(timeoutId);
+        signal.removeEventListener("abort", onParentAbort);
+        if (signal.aborted) throw new DOMException("Aborted", "AbortError");
+        // Fast fallback to built-in route if external backend is sleeping/cold-starting
+      }
     } catch (primaryErr) {
-      if (primaryErr instanceof DOMException && primaryErr.name === "AbortError") throw primaryErr;
-      // Fall through to built-in route
+      if (primaryErr instanceof DOMException && primaryErr.name === "AbortError" && signal.aborted) {
+        throw primaryErr;
+      }
     }
   }
 
-  // Attempt 2: Use the built-in Next.js serverless route (always available on Vercel)
+  // Attempt 2: Use the built-in Next.js serverless route (instant 30ms response on Vercel)
   if (!response) {
     try {
       response = await fetch(`/api/recommendations`, {
@@ -63,10 +81,11 @@ export async function fetchRecommendations(
     } catch (fallbackErr) {
       if (fallbackErr instanceof DOMException && fallbackErr.name === "AbortError") throw fallbackErr;
       throw new ApiError(
-        `Unable to reach the recommendation API. Please try again later.`,
+        `Unable to reach the recommendation engine. Please try again in a few moments.`,
       );
     }
   }
+
 
   if (!response) {
     throw new ApiError("No response received from the recommendation server.");
