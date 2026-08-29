@@ -26,14 +26,43 @@ app.set("trust proxy", 1);
 // Fall back to 4000 if PORT is unset or not a usable number (NaN is falsy).
 const PORT = Number(process.env.PORT) || 4000;
 
-// CORS_ORIGIN is "*" (dev) or a comma-separated allowlist (locked down before deploy).
-const corsOriginEnv = process.env.CORS_ORIGIN?.trim() || "*";
-const corsOptions: CorsOptions =
-  corsOriginEnv === "*"
-    ? { origin: "*" }
-    : { origin: corsOriginEnv.split(",").map((o) => o.trim()).filter(Boolean) };
+// Dynamic CORS: Allows localhost, all *.vercel.app preview & production domains, plus custom domains.
+const allowedOrigins = (process.env.CORS_ORIGIN || "")
+  .split(",")
+  .map((o) => o.trim())
+  .filter(Boolean);
+
+const corsOptions: CorsOptions = {
+  origin: (origin, callback) => {
+    // Allow requests with no origin (like mobile apps, curl, server-to-server)
+    if (!origin) return callback(null, true);
+
+    // Allow any localhost port
+    if (/^https?:\/\/localhost(:\d+)?$/.test(origin) || /^https?:\/\/127\.0\.0\.1(:\d+)?$/.test(origin)) {
+      return callback(null, true);
+    }
+
+    // Allow any Vercel deployment (*.vercel.app)
+    if (/^https:\/\/.*\.vercel\.app$/.test(origin)) {
+      return callback(null, true);
+    }
+
+    // Allow configured explicit domains
+    if (allowedOrigins.includes(origin) || allowedOrigins.includes("*")) {
+      return callback(null, true);
+    }
+
+    // Default permissive for public recommendation API
+    return callback(null, true);
+  },
+  methods: ["GET", "POST", "OPTIONS"],
+  allowedHeaders: ["Content-Type", "Authorization"],
+  credentials: true,
+};
 
 app.use(cors(corsOptions));
+app.options("*", cors(corsOptions));
+
 
 // Security headers (safe defaults for a JSON API).
 app.use(helmet());
