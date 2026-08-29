@@ -63,8 +63,14 @@ export default function CardDetailModal({
         onClick={(e) => e.stopPropagation()}
         role="document"
       >
+        {/* Mobile Bottom Sheet Handle */}
+        <div className="modal-sheet-handle-bar" aria-hidden="true">
+          <span className="modal-sheet-handle-pill" />
+        </div>
+
         {/* Modal Header */}
         <div className="modal-header">
+
           <div className="modal-card-identity">
             <div className="modal-card-image">
               <CardImage

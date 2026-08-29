@@ -78,10 +78,25 @@ export default function Home() {
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string>("");
   const [activePreset, setActivePreset] = useState<string | null>(null);
+  const [showFloatingBar, setShowFloatingBar] = useState<boolean>(false);
   const [selectedModalCard, setSelectedModalCard] = useState<ScoredCard | null>(null);
+
 
   const resultsRef = useRef<HTMLDivElement>(null);
   const abortRef = useRef<AbortController | null>(null);
+
+  // Show floating action bar on mobile when scrolled past the calculator
+  useEffect(() => {
+    function handleScroll() {
+      if (window.scrollY > 350) {
+        setShowFloatingBar(true);
+      } else {
+        setShowFloatingBar(false);
+      }
+    }
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
 
   // Auto-calculate initial recommendations on mount so mobile & desktop show results immediately
   useEffect(() => {
@@ -485,7 +500,9 @@ export default function Home() {
                   aria-label={`View full benefits and how to apply for ${card.cardName}`}
                 >
                   <div className="card-topline">
-                    <span className="rank">Rank 0{index + 1}</span>
+                    <span className={`rank ${index === 0 ? "rank-first" : ""}`}>
+                      {index === 0 ? "★ #1 Best Match" : `Rank #${index + 1}`}
+                    </span>
                     <span
                       className={
                         card.approvalSignal === "high" ? "approval high" : "approval"
@@ -497,6 +514,7 @@ export default function Home() {
                         : "Eligible"}
                     </span>
                   </div>
+
 
                   <div className="card-identity">
                     <div className="card-image-wrap">
@@ -616,6 +634,26 @@ export default function Home() {
         </div>
       </footer>
 
+      {/* Mobile Floating Action & Spend Tweak Bar */}
+      {showFloatingBar && submitted && sortedRecommendations.length > 0 && (
+        <div className="mobile-floating-bar" aria-label="Quick adjust spend" role="region">
+          <div className="mobile-floating-info">
+            <span className="mobile-floating-spend">{formatRupees(monthlySpend)}/mo</span>
+            <span className="mobile-floating-matches">{sortedRecommendations.length} Cards Found</span>
+          </div>
+          <button
+            type="button"
+            className="mobile-floating-action-btn"
+            onClick={() => {
+              window.scrollTo({ top: 0, behavior: "smooth" });
+            }}
+          >
+            <span>Tweak Numbers</span>
+            <span aria-hidden="true">↑</span>
+          </button>
+        </div>
+      )}
+
       {/* Animated Pop-Up Card Detail Modal */}
       <CardDetailModal
         card={selectedModalCard}
@@ -626,3 +664,4 @@ export default function Home() {
     </main>
   );
 }
+

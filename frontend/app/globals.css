@@ -2248,76 +2248,137 @@ input[type="range"] {
     gap: 10px;
   }
 
-  .modal-footer {
-    padding: 14px 20px;
-    flex-direction: column-reverse;
+  /* Top rank first badge */
+  .rank-first {
+    background: var(--green) !important;
+    color: #0f1514 !important;
+    font-weight: 850 !important;
+    box-shadow: 0 2px 8px rgba(74, 224, 163, 0.35);
   }
 
-  .modal-cancel-btn,
-  .modal-apply-cta {
-    width: 100%;
-    text-align: center;
+  /* Modal Mobile Sheet Handle */
+  .modal-sheet-handle-bar {
+    display: flex;
     justify-content: center;
-  }
-
-  .recalculate-banner {
-    flex-direction: column;
-    align-items: flex-start;
-    padding: 16px;
-  }
-
-  .social-share-strip {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 12px;
-    padding: 16px;
-  }
-
-  .share-buttons {
+    align-items: center;
+    padding: 10px 0 2px;
     width: 100%;
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
+    cursor: grab;
+  }
+
+  .modal-sheet-handle-pill {
+    width: 44px;
+    height: 5px;
+    border-radius: 4px;
+    background: var(--line);
+  }
+
+  /* Mobile Sticky Floating Summary & Tweak Bar */
+  .mobile-floating-bar {
+    position: fixed;
+    bottom: 16px;
+    left: 16px;
+    right: 16px;
+    background: var(--panel);
+    border: 1.5px solid var(--line);
+    border-radius: 50px;
+    padding: 8px 14px 8px 18px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.22);
+    z-index: 900;
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    animation: floatingBarSlideUp 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  @keyframes floatingBarSlideUp {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  .mobile-floating-info {
+    display: flex;
+    flex-direction: column;
+    gap: 1px;
+  }
+
+  .mobile-floating-spend {
+    font-size: 13px;
+    font-weight: 800;
+    color: var(--green-dark);
+    letter-spacing: -0.02em;
+  }
+
+  [data-theme="dark"] .mobile-floating-spend {
+    color: var(--green);
+  }
+
+  .mobile-floating-matches {
+    font-size: 10px;
+    color: var(--muted);
+    font-weight: 600;
+  }
+
+  .mobile-floating-action-btn {
+    background: var(--ink);
+    color: var(--paper);
+    border: none;
+    border-radius: 40px;
+    padding: 8px 16px;
+    font-size: 12px;
+    font-weight: 750;
+    display: inline-flex;
+    align-items: center;
     gap: 6px;
+    cursor: pointer;
+    text-decoration: none;
+    transition: transform 0.15s ease;
   }
 
-  .share-btn {
-    text-align: center;
-    padding: 8px;
+  [data-theme="dark"] .mobile-floating-action-btn {
+    background: var(--green);
+    color: #0f1514;
   }
 
-  .faq-section {
-    padding: 35px 18px 50px;
+  .mobile-floating-action-btn:active {
+    transform: scale(0.95);
   }
 
-  .faq-header h2 {
-    font-size: 24px;
-  }
-
-  .site-footer {
-    padding: 24px 18px 30px;
+  /* High Ergonomics for Mobile Card Actions */
+  .card-actions-row {
     flex-direction: column;
-    gap: 18px;
+    gap: 8px;
   }
 
-  .footer-links {
-    align-items: flex-start;
-    flex-direction: row;
-    flex-wrap: wrap;
-    gap: 14px;
-  }
-
-  .cookie-banner {
-    left: 10px;
-    right: 10px;
-    bottom: 10px;
-    flex-direction: column;
-    align-items: stretch;
-    padding: 12px 14px;
-  }
-
-  .cookie-btn {
-    text-align: center;
+  .card-details-trigger-btn,
+  .apply-link {
     width: 100%;
-    margin-top: 8px;
+    min-height: 42px;
+    justify-content: center;
+    font-size: 12px;
+  }
+
+  .apply-link {
+    font-size: 13px;
+    font-weight: 800;
+  }
+
+  /* Modal Sticky Action Footer on Mobile */
+  .modal-footer {
+    position: sticky;
+    bottom: 0;
+    background: var(--modal-bg);
+    border-top: 1px solid var(--line);
+    z-index: 20;
+    box-shadow: 0 -4px 16px rgba(0, 0, 0, 0.08);
   }
 }
+
