@@ -24,30 +24,37 @@ export default function CookieBanner() {
   return (
     <aside
       className="cookie-banner"
-      role="region"
+      role="status"
+      aria-live="polite"
       aria-label="Privacy and data protection notice"
     >
-      <div className="cookie-banner-content">
-        <span className="cookie-icon" aria-hidden="true">
-          <ShieldLockIcon size={20} />
-        </span>
-        <p>
-          <strong>Zero-PII Architecture:</strong> CCR processes calculations entirely in-memory
-          without tracking cookies or data storage. Review our{" "}
-          <Link href="/privacy" className="underline-link">
-            Privacy Policy
-          </Link>
-          .
-        </p>
+      <div className="cookie-banner-inner">
+        <div className="cookie-banner-left">
+          <div className="cookie-icon-wrapper" aria-hidden="true">
+            <ShieldLockIcon size={18} className="cookie-shield-svg" />
+          </div>
+          <div className="cookie-banner-text">
+            <p className="cookie-title">Zero-PII Architecture</p>
+            <p className="cookie-desc">
+              All calculations run 100% in your browser. We never collect personal data or use tracking cookies.{" "}
+              <Link href="/privacy" className="cookie-link">
+                Privacy Policy ↗
+              </Link>
+            </p>
+          </div>
+        </div>
+        <div className="cookie-banner-actions">
+          <button
+            onClick={handleDismiss}
+            className="cookie-btn"
+            type="button"
+            aria-label="Acknowledge and dismiss notice"
+          >
+            Got it
+          </button>
+        </div>
       </div>
-      <button
-        onClick={handleDismiss}
-        className="cookie-btn"
-        type="button"
-        aria-label="Acknowledge and dismiss notice"
-      >
-        Acknowledge
-      </button>
     </aside>
   );
 }
+

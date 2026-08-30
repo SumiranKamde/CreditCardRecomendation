@@ -621,22 +621,56 @@ export default function Home() {
       {/* Comprehensive FAQ Section */}
       <FaqSection />
 
-      {/* Global Footer with Legal Links */}
+      {/* Global High-Trust Footer */}
       <footer className="site-footer" role="contentinfo">
-        <div className="footer-brand">
-          <span className="footer-title">CCR / Independent Recommendation Engine</span>
-          <p className="footer-disclaimer">
-            Affiliate Disclosure: CCR participates in affiliate referral programs. We may earn a
-            commission when you apply and get approved through our links at no extra cost to you.
-            Card terms, welcome bonuses, and fees are subject to issuer revisions; verify details on
-            the bank&apos;s portal before applying.
-          </p>
-        </div>
-        <div className="footer-links">
-          <Link href="/privacy">Privacy Policy</Link>
-          <Link href="/terms">Terms of Service</Link>
-          <a href="#faq">FAQs</a>
-          <a href="#top">Back to Top ↑</a>
+        <div className="site-footer-inner">
+          <div className="footer-top-grid">
+            <div className="footer-brand-col">
+              <div className="footer-brand-header">
+                <div className="footer-logo-badge">CCR</div>
+                <div>
+                  <span className="footer-title">CCR Recommendation Engine</span>
+                  <span className="footer-tagline">Zero-PII Credit Card Optimizer for India</span>
+                </div>
+              </div>
+              <p className="footer-disclaimer">
+                <strong>Affiliate Transparency:</strong> CCR may earn an affiliate commission when you apply and get approved through our partner links, at zero extra cost to you. All reward calculations and rankings are 100% algorithmic, objective, and calculated locally in your browser.
+              </p>
+              <div className="footer-trust-pill">
+                <span className="trust-dot"></span>
+                <span>100% Client-Side Calculations &bull; Zero Server Storage</span>
+              </div>
+            </div>
+
+            <div className="footer-nav-groups">
+              <div className="footer-nav-col">
+                <h4 className="footer-nav-heading">Platform</h4>
+                <a href="#top">Recommender Top ↑</a>
+                <a href="#faq">Methodology &amp; FAQs</a>
+                <a href="#results" onClick={(e) => {
+                  const el = document.getElementById("results");
+                  if (el) el.scrollIntoView({ behavior: "smooth" });
+                }}>Card Results</a>
+              </div>
+
+              <div className="footer-nav-col">
+                <h4 className="footer-nav-heading">Legal &amp; Trust</h4>
+                <Link href="/privacy">Privacy Policy</Link>
+                <Link href="/terms">Terms of Service</Link>
+                <span className="footer-verified-tag">Zero-PII Guaranteed</span>
+              </div>
+            </div>
+          </div>
+
+          <div className="footer-bottom-bar">
+            <p className="footer-copyright">
+              &copy; 2026 CCR. Bank terms, welcome bonuses &amp; reward structures are subject to issuer revisions. Verify on bank portal before applying.
+            </p>
+            <a href="#top" className="footer-back-to-top" aria-label="Scroll back to top">
+              <span>Back to Top</span>
+              <span aria-hidden="true">&uarr;</span>
+            </a>
+          </div>
         </div>
       </footer>
 

@@ -47,12 +47,38 @@ export default function NotFound() {
         </div>
       </section>
 
-      <footer className="site-footer">
-        <span>CCR / Independent recommendation engine</span>
-        <div className="footer-links">
-          <Link href="/privacy">Privacy Policy</Link>
-          <Link href="/terms">Terms of Service</Link>
-          <Link href="/#faq">FAQs</Link>
+      <footer className="site-footer" role="contentinfo">
+        <div className="site-footer-inner">
+          <div className="footer-top-grid">
+            <div className="footer-brand-col">
+              <div className="footer-brand-header">
+                <div className="footer-logo-badge">CCR</div>
+                <div>
+                  <span className="footer-title">CCR Recommendation Engine</span>
+                  <span className="footer-tagline">Zero-PII Credit Card Optimizer for India</span>
+                </div>
+              </div>
+              <p className="footer-disclaimer">
+                100% anonymous &amp; client-side calculation model. No personal identifying information is ever stored or transmitted.
+              </p>
+            </div>
+            <div className="footer-nav-groups">
+              <div className="footer-nav-col">
+                <h4 className="footer-nav-heading">Platform</h4>
+                <Link href="/">Recommender Home</Link>
+                <Link href="/#faq">FAQs</Link>
+              </div>
+              <div className="footer-nav-col">
+                <h4 className="footer-nav-heading">Legal</h4>
+                <Link href="/privacy">Privacy Policy</Link>
+                <Link href="/terms">Terms of Service</Link>
+              </div>
+            </div>
+          </div>
+          <div className="footer-bottom-bar">
+            <p className="footer-copyright">&copy; 2026 CCR. Zero tracking &amp; client-side simulated.</p>
+            <Link href="/" className="footer-back-to-top">Back to Recommender &uarr;</Link>
+          </div>
         </div>
       </footer>
     </main>
